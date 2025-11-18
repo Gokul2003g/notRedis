@@ -24,6 +24,7 @@ func main() {
 	}
 
 	fmt.Println("Client connected: ", connection.RemoteAddr().String())
+	connection.Write([]byte("+PONG\r\n"))
 
 	defer connection.Close()
 }
