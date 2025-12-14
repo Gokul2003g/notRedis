@@ -17,14 +17,14 @@ func main() {
 
 	fmt.Println("Server listening on port 6379")
 
-	connection, err := listener.Accept()
-	if err != nil {
-		fmt.Println("Error accepting connection: ", err.Error())
-		os.Exit(1)
+	for {
+		connection, err := listener.Accept()
+		if err != nil {
+			fmt.Println("Error accepting connection: ", err.Error())
+			os.Exit(1)
+		}
+
+		fmt.Println("Client connected: ", connection.RemoteAddr().String())
+		connection.Write([]byte("+PONG\r\n"))
 	}
-
-	fmt.Println("Client connected: ", connection.RemoteAddr().String())
-	connection.Write([]byte("+PONG\r\n"))
-
-	defer connection.Close()
 }
