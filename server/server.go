@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"fmt"
@@ -6,16 +6,16 @@ import (
 	"os"
 )
 
-func main() {
+func Start(address string) error {
 	fmt.Println("Starting notRedis Server!...")
 
-	listener, err := net.Listen("tcp", "0.0.0.0:6379")
+	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		fmt.Println("Failed to bind port 6379")
 		os.Exit(1)
 	}
 
-	fmt.Println("Server listening on port 6379")
+	fmt.Println("Server listening on Port 6379")
 
 	for {
 		connection, err := listener.Accept()
@@ -24,7 +24,8 @@ func main() {
 			os.Exit(1)
 		}
 
-		fmt.Println("Client connected: ", connection.RemoteAddr().String())
-		connection.Write([]byte("+PONG\r\n"))
+		go handleConnection(connection)
+
 	}
+
 }

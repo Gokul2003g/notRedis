@@ -32,7 +32,7 @@
 
 ## Concurrency Model (Initial)
 
-- One goroutine per connection
+- One goroutine per connection, Not implementing Event Loops like redis does
 - Shared in-memory store
 - Mutex-protected writes
 
